@@ -1,5 +1,5 @@
 Name: x11-driver-video-nv
-Version: 1.2.2.1
+Version: 2.0.2
 Release: %mkrel 1
 Summary: The X.org driver for NVidia Cards
 Group: System/X11
@@ -40,8 +40,6 @@ rm -rf %{buildroot}
 
 %files
 %defattr(-,root,root)
-%{_libdir}/xorg/modules/drivers/riva128.la
-%{_libdir}/xorg/modules/drivers/riva128.so
 %{_libdir}/xorg/modules/drivers/nv_drv.la
 %{_libdir}/xorg/modules/drivers/nv_drv.so
 %{_mandir}/man4/nv.4.bz2
