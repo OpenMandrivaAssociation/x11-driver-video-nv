@@ -24,9 +24,8 @@ The X.org driver for NVidia Cards
 %patch0 -p1 -b .redhat-nv-riva-videomem-autodetection-debugging
 
 %build
-# FIXME: this is just for this release that has broken libtool files
-aclocal && automake && autoconf && libtoolize --copy --force
-%configure2_5x	--x-includes=%{_includedir}\
+autoreconf -ifs
+%configure	--x-includes=%{_includedir}\
 		--x-libraries=%{_libdir}
 
 %make
