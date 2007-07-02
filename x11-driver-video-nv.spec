@@ -1,5 +1,5 @@
 Name: x11-driver-video-nv
-Version: 2.1.0
+Version: 2.1.1
 Release: %mkrel 1
 Summary: The X.org driver for NVidia Cards
 Group: System/X11
@@ -24,7 +24,6 @@ The X.org driver for NVidia Cards
 %patch0 -p1 -b .redhat-nv-riva-videomem-autodetection-debugging
 
 %build
-autoreconf -ifs
 %configure	--x-includes=%{_includedir}\
 		--x-libraries=%{_libdir}
 
