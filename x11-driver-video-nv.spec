@@ -40,5 +40,5 @@ rm -rf %{buildroot}
 %defattr(-,root,root)
 %{_libdir}/xorg/modules/drivers/nv_drv.la
 %{_libdir}/xorg/modules/drivers/nv_drv.so
-%{_mandir}/man4/nv.4.bz2
+%{_mandir}/man4/nv*
 
