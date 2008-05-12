@@ -1,5 +1,5 @@
 Name: x11-driver-video-nv
-Version: 2.1.8
+Version: 2.1.9
 Release: %mkrel 1
 Summary: The X.org driver for NVidia Cards
 Group: System/X11
