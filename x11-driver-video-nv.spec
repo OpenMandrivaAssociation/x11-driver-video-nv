@@ -17,7 +17,7 @@ Conflicts: xorg-x11-server < 7.0
 Patch1: 0001-RedHat-nv-riva-videomem-autodetection-debugging.patch
 
 %description
-The X.org driver for NVidia Cards
+The X.org driver for NVidia Cards.
 
 %prep
 %setup -q -n xf86-video-nv-%{version}
