@@ -1,6 +1,6 @@
 Name: x11-driver-video-nv
 Version: 2.1.15
-Release: %mkrel 1
+Release: %mkrel 2
 Summary: X.org driver for NVidia Cards
 Group: System/X11
 URL: http://xorg.freedesktop.org
