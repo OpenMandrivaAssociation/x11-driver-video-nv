@@ -1,12 +1,12 @@
 Name: x11-driver-video-nv
 Version: 2.1.18
-Release: %mkrel 6
+Release: 7
 Summary: X.org driver for NVidia Cards
 Group: System/X11
+License: MIT
 URL: http://xorg.freedesktop.org
 Source: http://xorg.freedesktop.org/releases/individual/driver/xf86-video-nv-%{version}.tar.bz2
-License: MIT
-BuildRoot: %{_tmppath}/%{name}-root
+Patch1: 0001-RedHat-nv-riva-videomem-autodetection-debugging.patch
 
 BuildRequires: x11-proto-devel >= 1.0.0
 BuildRequires: x11-server-devel >= 1.2
@@ -16,14 +16,12 @@ Requires: x11-server-common %(xserver-sdk-abi-requires videodrv)
 
 Conflicts: xorg-x11-server < 7.0
 
-Patch1: 0001-RedHat-nv-riva-videomem-autodetection-debugging.patch
-
 %description
 x11-driver-video-nv is the X.org driver for NVidia Cards.
 
 %prep
-%setup -q -n xf86-video-nv-%{version}
-%patch1 -p1
+%setup -qn xf86-video-nv-%{version}
+%apply_patches
 
 %build
 autoreconf -ifs
@@ -33,12 +31,9 @@ autoreconf -ifs
 %install
 rm -rf %{buildroot}
 %makeinstall_std
-
-%clean
-rm -rf %{buildroot}
+find %{buildroot} -type f -name "*.la" -exec rm -f {} ';'
 
 %files
-%defattr(-,root,root)
-%{_libdir}/xorg/modules/drivers/nv_drv.la
 %{_libdir}/xorg/modules/drivers/nv_drv.so
 %{_mandir}/man4/nv*
+
