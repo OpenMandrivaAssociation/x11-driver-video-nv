@@ -1,11 +1,11 @@
 Name: x11-driver-video-nv
-Version: 2.1.18
-Release: 8
+Version: 2.1.20
+Release: 1
 Summary: X.org driver for NVidia Cards
 Group: System/X11
 License: MIT
 URL: http://xorg.freedesktop.org
-Source: http://xorg.freedesktop.org/releases/individual/driver/xf86-video-nv-%{version}.tar.bz2
+Source0: http://xorg.freedesktop.org/releases/individual/driver/xf86-video-nv-%{version}.tar.bz2
 Patch1: 0001-RedHat-nv-riva-videomem-autodetection-debugging.patch
 
 BuildRequires: x11-proto-devel >= 1.0.0
