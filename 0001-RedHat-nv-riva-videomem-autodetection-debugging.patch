@@ -1,0 +1,122 @@
+From 5b2062cab7f61209793897fc9bc2cfea61e2917a Mon Sep 17 00:00:00 2001
+From: =?utf-8?q?Paulo=20C=C3=A9sar=20Pereira=20de=20Andrade?= <paulo@dhcp191.conectiva>
+Date: Fri, 14 Dec 2007 19:40:24 -0200
+Subject: [PATCH] RedHat nv riva videomem autodetection debugging
+
+---
+ src/riva_hw.c |   48 +++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 files changed, 47 insertions(+), 1 deletions(-)
+
+diff --git a/src/riva_hw.c b/src/riva_hw.c
+index 32dc2a3..2addf46 100644
+--- a/src/riva_hw.c
++++ b/src/riva_hw.c
+@@ -904,14 +904,18 @@ static void nv3GetConfig
+     RIVA_HW_INST *chip
+ )
+ {
++    int bugreport_flag = 0;
++    xf86Msg(X_INFO, "NVIDIA DEBUG: Entering nv3Getconfig()\n");
+     /*
+      * Fill in chip configuration.
+      */
+     if (chip->PFB[0x00000000/4] & 0x00000020)
+     {
++	xf86Msg(X_INFO, "    BLOCK 1 condition true, test for SDRAM 128 ZX\n");
+         if (((chip->PMC[0x00000000/4] & 0xF0) == 0x20)
+          && ((chip->PMC[0x00000000/4] & 0x0F) >= 0x02))
+         {        
++	    xf86Msg(X_INFO, "\tSDRAM 128 ZX detected\n");
+             /*
+              * SDRAM 128 ZX.
+              */
+@@ -920,23 +924,34 @@ static void nv3GetConfig
+             {
+                 case 2:
+                     chip->RamAmountKBytes = 1024 * 4;
++		    xf86Msg(X_INFO, "\t    case 2 taken, 4Mb\n");
+                     break;
+                 case 1:
+                     chip->RamAmountKBytes = 1024 * 2;
++		    xf86Msg(X_INFO, "\t    case 1 taken, 2Mb\n");
+                     break;
+                 default:
+                     chip->RamAmountKBytes = 1024 * 8;
++		    xf86Msg(X_INFO, "\t    default case taken, defaulting to 8Mb\n");
++		    xf86Msg(X_INFO, "\t    (chip->PFB[0x00000000/4] & 0x03) = %x\n",
++			       (chip->PFB[0x00000000/4] & 0x03));
++		    xf86Msg(X_INFO, "\t    chip->PFB[0x00000000/4] = %x\n",
++			       chip->PFB[0x00000000/4]);
++		    bugreport_flag = 1;
+                     break;
+             }
+-        }            
++        }
+         else            
+         {
++	    xf86Msg(X_INFO, "\t\tSDRAM 128 ZX not detected, defaulting to 1024 * 8 (8Mb)\n");
++	    bugreport_flag = 1;
+             chip->RamBandwidthKBytesPerSec = 1000000;
+             chip->RamAmountKBytes          = 1024 * 8;
+         }            
+     }
+     else
+     {
++	xf86Msg(X_INFO, "    BLOCK 1 condition false, assume SGRAM 128\n");
+         /*
+          * SGRAM 128.
+          */
+@@ -945,12 +960,20 @@ static void nv3GetConfig
+         {
+             case 0:
+                 chip->RamAmountKBytes = 1024 * 8;
++		xf86Msg(X_INFO, "\t    case 0 taken, 8Mb\n");
+                 break;
+             case 2:
+                 chip->RamAmountKBytes = 1024 * 4;
++		xf86Msg(X_INFO, "\t    case 2 taken, 4Mb\n");
+                 break;
+             default:
+                 chip->RamAmountKBytes = 1024 * 2;
++		xf86Msg(X_INFO, "\t    default case taken, defaulting to 2Mb\n");
++		xf86Msg(X_INFO, "\t    (chip->PFB[0x00000000/4] & 0x00000003) = %x\n",
++			   (chip->PFB[0x00000000/4] & 0x00000003));
++		xf86Msg(X_INFO, "\t    chip->PFB[0x00000000/4] = %x\n",
++			   chip->PFB[0x00000000/4]);
++		bugreport_flag = 1;
+                 break;
+         }
+     }        
+@@ -968,6 +991,29 @@ static void nv3GetConfig
+     chip->UnloadStateExt  = UnloadStateExt;
+     chip->SetStartAddress = SetStartAddress;
+     chip->LockUnlock      = nv3LockUnlock;
++    if (bugreport_flag) {
++	xf86Msg(X_INFO,
++"\n\tIMPORTANT NOTE - PLEASE READ:  This driver does not properly\n"
++"\tautodetect the correct amount of video memory on all of the\n"
++"\tcurrently supported Nvidia video hardware due to the required\n"
++"\ttechnical specifications not being available to developers.\n"
++"\tIn order to improve video memory autodetection in future\n"
++"\tdriver releases, this driver has had the above debugging\n"
++"\tinformation added in the autodetection logic by Red Hat.  If\n"
++"\tyou are seeing this message, please file a bug report in the\n"
++"\tRed Hat bugzilla at http://bugzilla.redhat.com indicating that\n"
++"\tyour Nvidia video adaptor has misdetected video memory.  Make\n"
++"\tsure you attach the X config file \"/etc/X11/XF86Config\",\n"
++"\tX server log file \"/var/log/XFree86.0.log\", and the output\n"
++"\tof the command \"lspci -vvn\" to the bug report as individual\n"
++"\tuncompressed file attachments using the bugzilla file\n"
++"\tattachment feature.  In your bug report, be sure to mention\n"
++"\texactly how much video memory the card really does have, and\n"
++"\tbe sure this value is confirmed and not just a best guess.\n"
++"\tBy examining the data provided, we may be able to improve\n"
++"\tvideo memory autodetection in a future video driver update.\n\n");
++    }
++    xf86Msg(X_INFO, "NVIDIA DEBUG: Leaving nv3Getconfig()\n");
+ }
+ int RivaGetConfig
+ (
+-- 
+1.5.3.5
+
