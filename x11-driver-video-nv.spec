@@ -1,7 +1,7 @@
 Summary:	X.org driver for NVidia Cards
 Name:		x11-driver-video-nv
 Version:	2.1.20
-Release:	4
+Release:	5
 Group:		System/X11
 License:	MIT
 Url:		http://xorg.freedesktop.org
