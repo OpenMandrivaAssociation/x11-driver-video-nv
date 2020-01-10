@@ -18,7 +18,7 @@ x11-driver-video-nv is the X.org driver for NVidia Cards.
 
 %prep
 %setup -qn xf86-video-nv-%{version}
-%apply_patches
+%autopatch -p1
 
 %build
 autoreconf -ifs
