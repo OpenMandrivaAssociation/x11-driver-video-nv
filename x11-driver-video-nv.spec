@@ -1,3 +1,5 @@
+%define _disable_ld_no_undefined 1
+
 Summary:	X.org driver for NVidia Cards
 Name:		x11-driver-video-nv
 Version:	2.1.23.1
