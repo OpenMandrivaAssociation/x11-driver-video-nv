@@ -12,6 +12,11 @@ Source0:  https://github.com/X11Libre/xf86-video-nv/archive/refs/tags/xlibre-xf8
 #Source0:	https://xorg.freedesktop.org/releases/individual/driver/xf86-video-nv-%{version}.tar.xz
 #Patch1:		0001-RedHat-nv-riva-videomem-autodetection-debugging.patch
 
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	libtool-base
+BuildRequires:	slibtool
+BuildRequires:	make
 BuildRequires:	pkgconfig(xorg-macros)
 BuildRequires:	pkgconfig(xorg-server)
 BuildRequires:	pkgconfig(xproto)
