@@ -2,7 +2,7 @@
 
 Summary:	X.org driver for NVidia Cards
 Name:		x11-driver-video-nv
-Version:	2.1.23.1
+Version:	2.1.24
 Release:	1
 Group:		System/X11
 License:	MIT
@@ -26,7 +26,7 @@ Requires:	x11-server-common %(xserver-sdk-abi-requires videodrv)
 x11-driver-video-nv is the X.org driver for NVidia Cards.
 
 %prep
-%autosetup -n xf86-video-nv-xlibre-xf86-video-nv-%{version} -p1
+%autosetup -n xf86-video-nv-xlibre-xf86-video-nv-2.1.24 -p1
 
 %build
 autoreconf -ifs
