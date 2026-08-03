@@ -37,5 +37,5 @@ autoreconf -ifs
 %make_install
 
 %files
-%{_libdir}/xorg/modules/drivers/nv_drv.so
+#{_libdir}/xorg/modules/drivers/nv_drv.so
 %{_mandir}/man4/nv*
